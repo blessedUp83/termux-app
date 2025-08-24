@@ -1,0 +1,143 @@
+# Clone empty repo
+git clone https://github.com/blessedUp83/bvstudio-expo-starter.git
+cd bvstudio-expo-starter
+
+# Make folders
+mkdir -p frontend/public backend
+
+# Create frontend/app.json
+cat > frontend/app.json <<'EOF'
+{
+  "expo": {
+    "name": "BVStudio",
+    "slug": "bvstudio",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android", "web"],
+    "sdkVersion": "51.0.0",
+    "icon": "./public/icon.png",
+    "splash": {
+      "image": "./public/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": { "fallbackToCacheTimeout": 0 },
+    "assetBundlePatterns": ["**/*"],
+    "ios": { "supportsTablet": true },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./public/icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.yourname.bvstudio"
+    },
+    "web": { "favicon": "./public/favicon.ico" }
+  }
+}
+EOF
+
+# Create frontend/eas.json
+cat > frontend/eas.json <<'EOF'
+{
+  "cli": { "version": ">= 3.0.0" },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": { "distribution": "internal" },
+    "production": {
+      "android": { "buildType": "apk" },
+      "ios": { "buildType": "app-store" }
+    }
+  }
+}
+EOF
+
+# Create frontend/package.json
+cat > frontend/package.json <<'EOF'
+{
+  "name": "bvstudio",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "^51.0.0",
+    "react": "18.2.0",
+    "react-native": "0.73.6",
+    "react-native-web": "~0.19.10"
+  }
+}
+EOF
+
+# Create frontend/App.js
+cat > frontend/App.js <<'EOF'
+import React from "react";
+import { StyleSheet, Text, View, Button, Alert } from "react-native";
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>🎵 Welcome to BVStudio 🎵</Text>
+      <Button title="Tap me" onPress={() => Alert.alert("Hello from BVStudio!")} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#000",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  title: {
+    color: "#fff",
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 20
+  }
+});
+EOF
+
+# Create backend/server.js
+cat > backend/server.js <<'EOF'
+// Placeholder backend (extend later for beats, AI, etc.)
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+app.get("/", (req, res) => {
+  res.send("BVStudio backend is running!");
+});
+
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+EOF
+
+# Create README.md
+cat > README.md <<'EOF'
+# BVStudio Expo Starter
+
+Expo + React Native app starter with cloud builds via Expo EAS.
+
+## 🚀 How to Run
+1. Push this repo to GitHub.
+2. Go to [Expo EAS](https://expo.dev/eas) and connect your repo.
+3. Run a build (choose **Android → APK**).
+4. Download the APK directly to your phone and install it.
+EOF
+
+# Add placeholder icons
+echo "icon" > frontend/public/icon.png
+echo "splash" > frontend/public/splash.png
+echo "favicon" > frontend/public/favicon.ico
+
+# Git push
+git add .
+git commit -m "Initial BVStudio Expo Starter"
+git push origin main
